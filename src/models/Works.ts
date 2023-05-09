@@ -7,9 +7,9 @@ import {
   UpdatedAt,
   DeletedAt,
   PrimaryKey,
-  Default,
   AllowNull,
   AutoIncrement,
+  Default,
 } from "sequelize-typescript";
 
 @Table({
@@ -20,8 +20,8 @@ import {
 })
 export class Works extends Model {
   @PrimaryKey
-  @Column(DataType.INTEGER)
   @AutoIncrement
+  @Column(DataType.INTEGER)
   id!: string;
 
   @AllowNull(false)
@@ -29,6 +29,7 @@ export class Works extends Model {
   name!: string;
 
   @AllowNull(false)
+  @Default(0)
   @Column(DataType.INTEGER)
   views!: number;
 

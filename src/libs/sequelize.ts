@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
 import { Dialect, PoolOptions } from "sequelize";
 import config from "config";
+import { logger } from "./logger";
 
 export type ConnectionOptionsType = {
   type?: Dialect;
