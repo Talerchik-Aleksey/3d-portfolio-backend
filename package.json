@@ -1,0 +1,51 @@
+{
+  "name": "inventory_module",
+  "version": "1.0.0",
+  "main": "buld/index.js",
+  "scripts": {
+    "start": "node build/index.js",
+    "dev": "nodemon src/index.ts | pino-pretty",
+    "build": "tsc",
+    "test": "jest --watchAll --coverage",
+    "typeorm": "typeorm-ts-node-esm",
+    "migration:create": "npm run typeorm migration:create ./migrations/$npm_config_name",
+    "migration:run": "npm run typeorm migration:run -- -d ./data-source.ts",
+    "migration:revert": "npm run typeorm migration:revert -- -d ./data-source.ts",
+    "migration:generate": "npm run typeorm migration:generate -- -d ./data-source.ts ./migrations/post-refactoring/latest-changes-migration",
+    "migration:drop": "npm run typeorm schema:drop -- -d ./data-source.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.3.5",
+    "config": "^3.3.9",
+    "express": "^4.17.1",
+    "express-openapi-validate": "^0.6.1",
+    "helmet": "^6.1.5",
+    "mp-models": "git+ssh://git@gitlab.12devs.com:matching-platform/mvp/db-models.git",
+    "pg": "^8.8.0",
+    "pino": "^8.11.0",
+    "reflect-metadata": "^0.1.13",
+    "sequelize": "^6.30.0",
+    "sequelize-typescript": "^2.1.5",
+    "swagger-ui-express": "^4.6.2",
+    "ts-node": "^10.9.1",
+    "typeorm": "^0.3.11",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "@types/config": "^3.3.0",
+    "@types/express": "^4.17.13",
+    "@types/jest": "^29.5.0",
+    "@types/swagger-ui-express": "^4.1.3",
+    "@types/yamljs": "^0.2.31",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "jest": "^29.5.0",
+    "nodemon": "^2.0.13",
+    "pino-pretty": "^10.0.0",
+    "prettier": "2.8.7",
+    "ts-jest": "^29.1.0",
+    "typescript": "^4.5.4"
+  }
+}
