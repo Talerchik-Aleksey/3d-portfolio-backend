@@ -24,6 +24,11 @@ export class CreateWorksTable1683628372393 implements MigrationInterface {
             isNullable: false,
           },
           {
+            name: "description",
+            type: "varchar",
+            isNullable: false,
+          },
+          {
             name: "views",
             type: "int",
             isNullable: false,

@@ -3,6 +3,7 @@ import config from "config";
 import helmet from "helmet";
 import { connect } from "./libs/sequelize";
 import { logger } from "./libs/logger";
+import worksRouter from "./routes/works";
 
 const app = express();
 
@@ -12,7 +13,7 @@ async function startServer() {
     app.use(json());
     app.use(helmet());
 
-    app.use("/api/3d-data", routes);
+    app.use("/api/3d-data", worksRouter);
 
     const port = config.get<number>("server.port") || 3005;
 
