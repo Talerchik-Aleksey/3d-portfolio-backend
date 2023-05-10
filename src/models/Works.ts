@@ -13,7 +13,7 @@ import {
 } from "sequelize-typescript";
 
 @Table({
-  tableName: "histories_decisions",
+  tableName: "works",
   timestamps: true,
   paranoid: true,
   underscored: true,

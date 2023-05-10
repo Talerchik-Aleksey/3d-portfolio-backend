@@ -22,11 +22,13 @@ export class CreateWorksTable1683628372393 implements MigrationInterface {
             name: "name",
             type: "varchar",
             isNullable: false,
+            length: "100",
           },
           {
             name: "description",
             type: "varchar",
             isNullable: false,
+            length: "1000",
           },
           {
             name: "views",

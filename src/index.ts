@@ -1,8 +1,8 @@
 import express, { json } from "express";
 import config from "config";
-import helmet from "helmet";
 import { connect } from "./libs/sequelize";
 import { logger } from "./libs/logger";
+import cors from "cors";
 import worksRouter from "./routes/works";
 
 const app = express();
@@ -11,7 +11,7 @@ async function startServer() {
   try {
     await connect();
     app.use(json());
-    app.use(helmet());
+    app.use(cors());
 
     app.use("/api/3d-data", worksRouter);
 
