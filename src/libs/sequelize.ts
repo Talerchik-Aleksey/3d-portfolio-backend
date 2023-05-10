@@ -17,19 +17,24 @@ export type ConnectionOptionsType = {
 let sequelize: Sequelize | undefined = undefined;
 
 export async function connect() {
-  const options = config.get<ConnectionOptionsType>("db");
+  try {
+    const options = config.get<ConnectionOptionsType>("db");
+    logger.info(options, "options");
 
-  sequelize = new Sequelize({
-    dialect: options.dialect || options.type || "postgres",
-    host: options.host,
-    database: options.database,
-    username: options.user,
-    password: options.password,
-    pool: options.pool,
-    models: [`${__dirname}/../models`],
-  });
+    sequelize = new Sequelize({
+      dialect: options.dialect || options.type || "postgres",
+      host: options.host,
+      database: options.database,
+      username: options.user,
+      password: options.password,
+      pool: options.pool,
+      models: [`${__dirname}/../models`],
+    });
 
-  await sequelize.authenticate();
+    await sequelize.authenticate();
+  } catch (error) {
+    logger.error(error);
+  }
 }
 
 export async function getSequelize(): Promise<Sequelize> {
