@@ -1,0 +1,31 @@
+{
+  "level": 50,
+  "time": 1683741796602,
+  "pid": 52,
+  "hostname": "srv-chdr8l2k728nnn2vnio0-kn-00001-deployment-594cdd97c5-829h7",
+  "err": {
+    "type": "HostNotFoundError",
+    "message": "getaddrinfo ENOTFOUND dpg-chdr5crhp8u3v73sipgg",
+    "stack": "SequelizeHostNotFoundError: getaddrinfo ENOTFOUND dpg-chdr5crhp8u3v73sipgg\n    at Client._connectionCallback (/opt/render/project/src/node_modules/sequelize/lib/dialects/postgres/connection-manager.js:134:24)\n    at Client._handleErrorWhileConnecting (/opt/render/project/src/node_modules/pg/lib/client.js:318:19)\n    at Client._handleErrorEvent (/opt/render/project/src/node_modules/pg/lib/client.js:328:19)\n    at Connection.emit (events.js:376:20)\n    at Socket.reportStreamError (/opt/render/project/src/node_modules/pg/lib/connection.js:57:12)\n    at Socket.emit (events.js:376:20)\n    at emitErrorNT (internal/streams/destroy.js:106:8)\n    at emitErrorCloseNT (internal/streams/destroy.js:74:3)\n    at processTicksAndRejections (internal/process/task_queues.js:82:21)",
+    "name": "SequelizeHostNotFoundError",
+    "parent": {
+      "type": "Error",
+      "message": "getaddrinfo ENOTFOUND dpg-chdr5crhp8u3v73sipgg",
+      "stack": "Error: getaddrinfo ENOTFOUND dpg-chdr5crhp8u3v73sipgg\n    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:67:26)",
+      "errno": -3008,
+      "code": "ENOTFOUND",
+      "syscall": "getaddrinfo",
+      "hostname": "dpg-chdr5crhp8u3v73sipgg"
+    },
+    "original": {
+      "type": "Error",
+      "message": "getaddrinfo ENOTFOUND dpg-chdr5crhp8u3v73sipgg",
+      "stack": "Error: getaddrinfo ENOTFOUND dpg-chdr5crhp8u3v73sipgg\n    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:67:26)",
+      "errno": -3008,
+      "code": "ENOTFOUND",
+      "syscall": "getaddrinfo",
+      "hostname": "dpg-chdr5crhp8u3v73sipgg"
+    }
+  },
+  "msg": "getaddrinfo ENOTFOUND dpg-chdr5crhp8u3v73sipgg"
+}

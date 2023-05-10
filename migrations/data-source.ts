@@ -1,8 +1,12 @@
+import dotenv from "dotenv";
+dotenv.config();
 import config from "config";
 import "reflect-metadata";
 import { DataSource, DataSourceOptions } from "typeorm";
 
 const postgresConfig = config.get<any>("db");
+
+console.log(postgresConfig);
 
 const connectionOptions: DataSourceOptions = {
   ...postgresConfig,

@@ -1,4 +1,6 @@
 import express, { json } from "express";
+import dotenv from "dotenv";
+dotenv.config();
 import config from "config";
 import { connect } from "./libs/sequelize";
 import { logger } from "./libs/logger";
