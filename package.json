@@ -1,7 +1,7 @@
 {
   "name": "inventory_module",
   "version": "1.0.0",
-  "main": "buld/index.js",
+  "main": "build/index.js",
   "scripts": {
     "start": "node build/index.js",
     "dev": "nodemon src/index.ts | pino-pretty",
