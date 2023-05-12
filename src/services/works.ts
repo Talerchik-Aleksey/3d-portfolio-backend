@@ -1,3 +1,4 @@
+import { getSequelize } from "../libs/sequelize";
 import { Objects } from "../models/Objects";
 import { Works } from "../models/Works";
 
@@ -10,13 +11,21 @@ type RequestBody = {
 };
 
 export async function createWork(requestBody: RequestBody) {
-  const { name, views, image, description, object } = requestBody;
-  const work = await Works.create({ name, views, image, description, object });
-  await Objects.create({
-    worksId: work.id,
-    object,
-  });
-  return work;
+  const sequelize = await getSequelize();
+  const transaction = await sequelize.transaction();
+  try {
+    const { name, views, image, description, object } = requestBody;
+    const work = await Works.create({ name, views, image, description, object });
+    await Objects.create({
+      workId: work.id,
+      object,
+    });
+    await transaction.commit();
+    return work;
+  } catch (error) {
+    transaction.rollback();
+    throw error;
+  }
 }
 
 export async function getWorksFromDb() {

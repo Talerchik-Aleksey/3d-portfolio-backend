@@ -32,7 +32,7 @@ export class Objects extends Model {
 
   @ForeignKey(() => Works)
   @Column(DataType.INTEGER)
-  worksId!: number;
+  workId!: number;
 
   @CreatedAt
   @Column(DataType.DATE)
