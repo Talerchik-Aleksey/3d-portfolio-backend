@@ -15,7 +15,7 @@ export async function createWork(requestBody: RequestBody) {
   const transaction = await sequelize.transaction();
   try {
     const { name, views, image, description, object } = requestBody;
-    const work = await Works.create({ name, views, image, description, object });
+    const work = await Works.create({ name, views, image, description });
     await Objects.create({
       workId: work.id,
       object,
