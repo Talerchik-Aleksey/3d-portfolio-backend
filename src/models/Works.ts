@@ -43,10 +43,6 @@ export class Works extends Model {
   @Column(DataType.STRING)
   description!: string;
 
-  @AllowNull(false)
-  @Column(DataType.JSONB)
-  object!: Record<string, unknown>;
-
   @CreatedAt
   @Column(DataType.DATE)
   createdAt!: Date;
