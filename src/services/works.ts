@@ -45,6 +45,6 @@ export async function deleteWorkFromDb(id: number) {
 }
 
 export async function getObjectFromDb(id: number) {
-  const work = await Objects.findOne({ where: { wrokId: id } });
+  const work = await Objects.findOne({ where: { workId: id } });
   return work;
 }

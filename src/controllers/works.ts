@@ -31,6 +31,7 @@ export async function getWorks(req: Request, res: Response) {
 export async function getObject(req: Request, res: Response) {
   try {
     const { id } = req.params;
+    logger.info(id);
     const work = await getObjectFromDb(+id);
     res.status(200).send(work);
   } catch (error) {
