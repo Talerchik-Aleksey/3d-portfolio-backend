@@ -6,6 +6,7 @@ import {
   updateWork,
   deleteWorkFromDb,
   getObjectFromDb,
+  getWorkFromDb,
 } from "../services/works";
 
 export async function postWork(req: Request, res: Response) {
@@ -22,6 +23,17 @@ export async function getWorks(req: Request, res: Response) {
   try {
     const works = await getWorksFromDb();
     res.status(200).send(works);
+  } catch (error) {
+    logger.error(error);
+    res.status(500).json({});
+  }
+}
+
+export async function getWork(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+    const work = await getWorkFromDb(+id);
+    res.status(200).send(work);
   } catch (error) {
     logger.error(error);
     res.status(500).json({});

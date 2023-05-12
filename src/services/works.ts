@@ -33,6 +33,11 @@ export async function getWorksFromDb() {
   return works;
 }
 
+export async function getWorkFromDb(id: number) {
+  const work = await Works.findOne({ where: { id } });
+  return work;
+}
+
 export async function updateWork(id: number, requestBody: RequestBody) {
   const work = await Works.update(requestBody, { where: { id } });
   return work;
@@ -46,5 +51,8 @@ export async function deleteWorkFromDb(id: number) {
 
 export async function getObjectFromDb(id: number) {
   const work = await Objects.findOne({ where: { workId: id } });
-  return work;
+  if (!work) {
+    return null;
+  }
+  return work.object;
 }
