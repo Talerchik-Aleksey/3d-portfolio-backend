@@ -8,6 +8,6 @@
     "port": 5432,
     "user": "admin",
     "password": "",
-    "database": "portfolio"
+    "database": "works"
   }
 }

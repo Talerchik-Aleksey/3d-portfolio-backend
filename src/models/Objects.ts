@@ -9,43 +9,30 @@ import {
   PrimaryKey,
   AllowNull,
   AutoIncrement,
-  Default,
-  HasOne,
+  ForeignKey,
+  BelongsTo,
 } from "sequelize-typescript";
-import { Objects } from "./Objects";
+import { Works } from "./Works";
 
 @Table({
-  tableName: "works",
+  tableName: "objects",
   timestamps: true,
   paranoid: true,
   underscored: true,
 })
-export class Works extends Model {
+export class Objects extends Model {
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
   id!: string;
 
   @AllowNull(false)
-  @Column(DataType.STRING)
-  name!: string;
-
-  @AllowNull(false)
-  @Default(0)
-  @Column(DataType.INTEGER)
-  views!: number;
-
-  @AllowNull(false)
-  @Column(DataType.STRING)
-  image!: string;
-
-  @AllowNull(false)
-  @Column(DataType.STRING)
-  description!: string;
-
-  @AllowNull(false)
   @Column(DataType.JSONB)
   object!: Record<string, unknown>;
+
+  @ForeignKey(() => Works)
+  @Column(DataType.INTEGER)
+  worksId!: number;
 
   @CreatedAt
   @Column(DataType.DATE)
@@ -59,6 +46,6 @@ export class Works extends Model {
   @Column(DataType.DATE)
   deletedAt!: Date;
 
-  @HasOne(() => Objects)
-  objects!: Objects;
+  @BelongsTo(() => Works)
+  works!: Works;
 }
