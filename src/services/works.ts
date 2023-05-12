@@ -40,6 +40,7 @@ export async function updateWork(id: number, requestBody: RequestBody) {
 
 export async function deleteWorkFromDb(id: number) {
   const work = await Works.destroy({ where: { id } });
+  await Objects.destroy({ where: { workId: id } });
   return work;
 }
 
