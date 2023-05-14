@@ -14,12 +14,15 @@ export async function createWork(requestBody: RequestBody) {
   const sequelize = await getSequelize();
   const transaction = await sequelize.transaction();
   try {
-    const { name, views, image, description, object } = requestBody;
-    const work = await Works.create({ name, views, image, description });
-    await Objects.create({
-      workId: work.id,
-      object,
-    });
+    const { name, views = 0, image, description, object } = requestBody;
+    const work = await Works.create({ name, views, image, description }, { transaction });
+    await Objects.create(
+      {
+        workId: work.id,
+        object,
+      },
+      { transaction },
+    );
     await transaction.commit();
     return work;
   } catch (error) {
@@ -29,7 +32,7 @@ export async function createWork(requestBody: RequestBody) {
 }
 
 export async function getWorksFromDb() {
-  const works = await Works.findAll();
+  const works = await Works.findAll({ order: [["createdAt", "DESC"]] });
   return works;
 }
 
@@ -55,4 +58,13 @@ export async function getObjectFromDb(id: number) {
     return null;
   }
   return work.object;
+}
+
+export async function addViewsForWork(id: number) {
+  const work = await Works.findOne({ where: { id } });
+  if (!work) {
+    return;
+  }
+  work.views += 1;
+  await work.save();
 }

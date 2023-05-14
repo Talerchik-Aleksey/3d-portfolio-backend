@@ -7,6 +7,7 @@ import {
   deleteWorkFromDb,
   getObjectFromDb,
   getWorkFromDb,
+  addViewsForWork,
 } from "../services/works";
 
 export async function postWork(req: Request, res: Response) {
@@ -67,6 +68,17 @@ export async function deleteWork(req: Request, res: Response) {
   try {
     const { id } = req.params;
     const work = await deleteWorkFromDb(+id);
+    res.status(200).send(work);
+  } catch (error) {
+    logger.error(error);
+    res.status(500).json({});
+  }
+}
+
+export async function addViews(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+    const work = await addViewsForWork(+id);
     res.status(200).send(work);
   } catch (error) {
     logger.error(error);
