@@ -1,4 +1,4 @@
-import express, { json } from "express";
+import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
 import config from "config";
@@ -7,6 +7,7 @@ import { logger } from "./libs/logger";
 import cors from "cors";
 import worksRouter from "./routes/works";
 import compression from "compression";
+import userRouter from "./routes/user";
 
 const app = express();
 
@@ -19,6 +20,7 @@ async function startServer() {
     app.use(compression());
 
     app.use("/api/3d-data", worksRouter);
+    app.use("/api/user", userRouter);
 
     const port = config.get<number>("server.port") || 3005;
 

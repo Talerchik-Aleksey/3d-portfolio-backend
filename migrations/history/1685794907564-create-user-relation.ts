@@ -11,6 +11,8 @@ export class CreateUserRelation1685794907564 implements MigrationInterface {
           {
             name: "id",
             type: "uuid",
+            isGenerated: true,
+            generationStrategy: "uuid",
             isPrimary: true,
           },
           {
