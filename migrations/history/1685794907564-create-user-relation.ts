@@ -20,13 +20,13 @@ export class CreateUserRelation1685794907564 implements MigrationInterface {
             type: "varchar",
             isNullable: false,
             isUnique: true,
-            length: "50",
+            length: "100",
           },
           {
             name: "password",
             type: "varchar",
             isNullable: false,
-            length: "50",
+            length: "100",
           },
           {
             name: "created_at",

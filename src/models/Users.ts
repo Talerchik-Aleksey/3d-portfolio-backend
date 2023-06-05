@@ -9,7 +9,6 @@ import {
   PrimaryKey,
   AllowNull,
   AutoIncrement,
-  Default,
 } from "sequelize-typescript";
 
 @Table({
