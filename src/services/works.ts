@@ -2,17 +2,16 @@ import { getSequelize } from "../libs/sequelize";
 import { Objects } from "../models/Objects";
 import { Works } from "../models/Works";
 
-type RequestBody = {
-  name: string;
-  views: number;
-  image: string;
-  description: string;
-  object: Record<string, unknown>;
-};
+import Queue from "bull";
 
-export async function createWork(requestBody: RequestBody) {
+export const createWorkQueue = new Queue("create work");
+
+createWorkQueue.process(async (job) => {
+  const { requestBody } = job.data;
+
   const sequelize = await getSequelize();
   const transaction = await sequelize.transaction();
+
   try {
     const { name, views = 0, image, description, object } = requestBody;
     const work = await Works.create({ name, views, image, description }, { transaction });
@@ -23,12 +22,25 @@ export async function createWork(requestBody: RequestBody) {
       },
       { transaction },
     );
+
     await transaction.commit();
     return work;
   } catch (error) {
     transaction.rollback();
     throw error;
   }
+});
+
+type RequestBody = {
+  name: string;
+  views: number;
+  image: string;
+  description: string;
+  object: Record<string, unknown>;
+};
+
+export async function createWork(requestBody: RequestBody) {
+  createWorkQueue.add({ requestBody });
 }
 
 export async function getWorksFromDb() {
