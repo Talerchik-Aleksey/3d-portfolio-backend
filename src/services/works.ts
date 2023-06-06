@@ -13,26 +13,34 @@ type RequestBody = {
 };
 
 export async function createWork(requestBody: RequestBody) {
+  // Re-use database connection
   const sequelize = await getSequelize();
   const transaction = await sequelize.transaction();
 
   try {
     const { name, views = 0, image, description, object } = requestBody;
-    const work = await Works.create({ name, views, image, description }, { transaction });
-    await Objects.create(
-      {
-        workId: work.id,
-        object,
-      },
-      { transaction },
-    ).catch((e) => logger.error(e));
 
+    // Create Work and Object in parallel
+    const workPromise = Works.create({ name, views, image, description }, { transaction });
+    const work = await workPromise;
+    const objectPromise = Objects.create({ workId: work.id, object }, { transaction });
+    await objectPromise;
+
+    // Commit the transaction
     await transaction.commit();
+
     logger.info(`Work ${work.id} created`);
+
+    // Return the work
     return work;
   } catch (error) {
     logger.error(error);
-    transaction.rollback();
+
+    // Rollback transaction if it exists
+    if (transaction) {
+      await transaction.rollback();
+    }
+
     throw error;
   }
 }
