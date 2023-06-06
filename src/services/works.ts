@@ -1,6 +1,7 @@
 import { getSequelize } from "../libs/sequelize";
 import { Objects } from "../models/Objects";
 import { Works } from "../models/Works";
+import { Worker } from "worker_threads";
 
 import { logger } from "../libs/logger";
 
@@ -11,6 +12,23 @@ type RequestBody = {
   description: string;
   object: Record<string, unknown>;
 };
+
+async function retryOnFail<T>(
+  operation: () => Promise<T>,
+  retries: number,
+  delay: number,
+): Promise<T> {
+  try {
+    return await operation();
+  } catch (error) {
+    if (retries > 0) {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      return retryOnFail(operation, retries - 1, delay);
+    } else {
+      throw error;
+    }
+  }
+}
 
 export async function createWork(requestBody: RequestBody) {
   // Re-use database connection
@@ -23,15 +41,21 @@ export async function createWork(requestBody: RequestBody) {
     // Create Work and Object in parallel
     const workPromise = Works.create({ name, views, image, description }, { transaction });
     const work = await workPromise;
-    const objectPromise = Objects.create({ workId: work.id, object }, { transaction });
-    await objectPromise;
+    const worker = new Worker("./objectWorker.ts", { workerData: { workId: work.id, object } });
+    worker.on("message", async () => {
+      await retryOnFail(() => transaction.commit(), 3, 2000);
+      console.log(`Work ${work.id} created`);
+    });
 
-    // Commit the transaction
-    await transaction.commit();
+    worker.on("error", (error) => {
+      console.error(error);
+      retryOnFail(() => transaction.rollback(), 3, 2000);
+    });
 
-    logger.info(`Work ${work.id} created`);
+    worker.on("exit", (code) => {
+      if (code !== 0) console.error(`Worker stopped with exit code ${code}`);
+    });
 
-    // Return the work
     return work;
   } catch (error) {
     logger.error(error);
