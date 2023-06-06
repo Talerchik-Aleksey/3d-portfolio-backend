@@ -25,7 +25,7 @@ export async function createWork(requestBody: RequestBody) {
         object,
       },
       { transaction },
-    );
+    ).catch((e) => logger.error(e));
 
     await transaction.commit();
     logger.info(`Work ${work.id} created`);
