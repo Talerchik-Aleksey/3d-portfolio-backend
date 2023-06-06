@@ -31,6 +31,7 @@ export async function createWork(requestBody: RequestBody) {
     logger.info(`Work ${work.id} created`);
     return work;
   } catch (error) {
+    logger.error(error);
     transaction.rollback();
     throw error;
   }
