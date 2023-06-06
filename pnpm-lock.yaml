@@ -38,6 +38,9 @@ dependencies:
   pino:
     specifier: ^8.14.1
     version: 8.14.1
+  pino-http:
+    specifier: ^8.3.3
+    version: 8.3.3
   reflect-metadata:
     specifier: ^0.1.13
     version: 0.1.13
@@ -3740,6 +3743,15 @@ packages:
     dependencies:
       readable-stream: 4.4.0
       split2: 4.2.0
+
+  /pino-http@8.3.3:
+    resolution: {integrity: sha512-p4umsNIXXVu95HD2C8wie/vXH7db5iGRpc+yj1/ZQ3sRtTQLXNjoS6Be5+eI+rQbqCRxen/7k/KSN+qiZubGDw==}
+    dependencies:
+      get-caller-file: 2.0.5
+      pino: 8.14.1
+      pino-std-serializers: 6.2.1
+      process-warning: 2.2.0
+    dev: false
 
   /pino-pretty@10.0.0:
     resolution: {integrity: sha512-zKFjYXBzLaLTEAN1ayKpHXtL5UeRQC7R3lvhKe7fWs7hIVEjKGG/qIXwQt9HmeUp71ogUd/YcW+LmMwRp4KT6Q==}
