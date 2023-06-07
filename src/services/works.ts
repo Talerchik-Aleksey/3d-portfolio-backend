@@ -48,6 +48,7 @@ export async function createWork(requestBody: RequestBody) {
       throw error;
     });
 
+    transaction.commit();
     return work;
   } catch (error) {
     logger.error(error);
