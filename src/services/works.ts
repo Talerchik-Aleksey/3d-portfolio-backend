@@ -1,7 +1,6 @@
 import { getSequelize } from "../libs/sequelize";
 import { Objects } from "../models/Objects";
 import { Works } from "../models/Works";
-import { Worker } from "worker_threads";
 
 import { logger } from "../libs/logger";
 
@@ -41,21 +40,12 @@ export async function createWork(requestBody: RequestBody) {
     // Create Work and Object in parallel
     const workPromise = Works.create({ name, views, image, description }, { transaction });
     const work = await workPromise;
-    const worker = new Worker("./objectWorker.js", {
-      workerData: { workId: work.id, object },
-    });
-    worker.on("message", async () => {
-      await retryOnFail(() => transaction.commit(), 3, 2000);
-      console.log(`Work ${work.id} created`);
-    });
-
-    worker.on("error", (error) => {
-      console.error(error);
-      retryOnFail(() => transaction.rollback(), 3, 2000);
-    });
-
-    worker.on("exit", (code) => {
-      if (code !== 0) console.error(`Worker stopped with exit code ${code}`);
+    const worker = await Objects.create({
+      workId: work.id,
+      object,
+    }).catch((error) => {
+      logger.error(error);
+      throw error;
     });
 
     return work;
