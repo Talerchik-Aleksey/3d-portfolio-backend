@@ -41,7 +41,9 @@ export async function createWork(requestBody: RequestBody) {
     // Create Work and Object in parallel
     const workPromise = Works.create({ name, views, image, description }, { transaction });
     const work = await workPromise;
-    const worker = new Worker("./objectWorker.ts", { workerData: { workId: work.id, object } });
+    const worker = new Worker("./objectWorker.js", {
+      workerData: { workId: work.id, object },
+    });
     worker.on("message", async () => {
       await retryOnFail(() => transaction.commit(), 3, 2000);
       console.log(`Work ${work.id} created`);

@@ -1505,7 +1505,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001495
-      electron-to-chromium: 1.4.422
+      electron-to-chromium: 1.4.423
       node-releases: 2.0.12
       update-browserslist-db: 1.0.11(browserslist@4.21.7)
     dev: true
@@ -1547,7 +1547,7 @@ packages:
       get-port: 5.1.1
       ioredis: 5.3.2
       lodash: 4.17.21
-      msgpackr: 1.9.4
+      msgpackr: 1.9.5
       semver: 7.5.1
       uuid: 8.3.2
     transitivePeerDependencies:
@@ -1942,8 +1942,8 @@ packages:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: false
 
-  /electron-to-chromium@1.4.422:
-    resolution: {integrity: sha512-OQMid0IRbJv27BhlPiBK8CfGzjeq4ZCBSmpwNi1abyS8w17/BajOUu7hBI49ptDTBCz9NRFbORhWvt41dF7dwg==}
+  /electron-to-chromium@1.4.423:
+    resolution: {integrity: sha512-y4A7YfQcDGPAeSWM1IuoWzXpg9RY1nwHzHSwRtCSQFp9FgAVDgdWlFf0RbdWfLWQ2WUI+bddUgk5RgTjqRE6FQ==}
     dev: true
 
   /emittery@0.13.1:
@@ -3406,8 +3406,8 @@ packages:
     dev: false
     optional: true
 
-  /msgpackr@1.9.4:
-    resolution: {integrity: sha512-MihliU9Wgi5rVHmXYjXeB969jDBogwMVUn9CjrL8T2Na5+n5gsTJVGdeUHBplNtqEqgnm/nFnQYK8Bdzry5ahQ==}
+  /msgpackr@1.9.5:
+    resolution: {integrity: sha512-/IJ3cFSN6Ci3eG2wLhbFEL6GT63yEaoN/R5My2QkV6zro+OJaVRLPlwvxY7EtHYSmDlQpk8stvOQTL2qJFkDRg==}
     optionalDependencies:
       msgpackr-extract: 3.0.2
     dev: false
