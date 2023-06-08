@@ -3,6 +3,7 @@ import { Objects } from "../models/Objects";
 import { Works } from "../models/Works";
 
 import { logger } from "../libs/logger";
+import { downloadFile, uploadFile } from "../libs/dropbox";
 
 type RequestBody = {
   name: string;
@@ -40,13 +41,8 @@ export async function createWork(requestBody: RequestBody) {
     // Create Work and Object in parallel
     const workPromise = Works.create({ name, views, image, description }, { transaction });
     const work = await workPromise;
-    const worker = await Objects.create({
-      workId: work.id,
-      object,
-    }).catch((error) => {
-      logger.error(error);
-      throw error;
-    });
+    const res = await uploadFile(object, work.id);
+    logger.info(res);
 
     transaction.commit();
     return work;
@@ -84,11 +80,8 @@ export async function deleteWorkFromDb(id: number) {
 }
 
 export async function getObjectFromDb(id: number) {
-  const work = await Objects.findOne({ where: { workId: id } });
-  if (!work) {
-    return null;
-  }
-  return work.object;
+  const res: any = await downloadFile(id);
+  return res.result.fileBinary;
 }
 
 export async function addViewsForWork(id: number) {
