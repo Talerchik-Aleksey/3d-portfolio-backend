@@ -1,6 +1,6 @@
 import { Dropbox } from "dropbox";
 import fetch from "isomorphic-fetch";
-import { dotenv } from "dotenv";
+import dotenv from "dotenv";
 
 dotenv.config();
 
