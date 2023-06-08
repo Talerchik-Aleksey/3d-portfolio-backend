@@ -1,9 +1,11 @@
 import { Dropbox } from "dropbox";
 import fetch from "isomorphic-fetch";
+import { dotenv } from "dotenv";
+
+dotenv.config();
 
 const dbx = new Dropbox({
-  accessToken:
-    "sl.Bf8D2tOeXb2ef6uw2DwDV_WATcYriwh3QgqHCNZUeLLuSxW8ylMfdwZk0FwGvB7wP7_UKAIHoSybCY-FSSojhqTRdJfDI-hQ0X3gQECo4VNnxyDiRHsCfiE5lZmEfxLByHv_SrIHx4lr",
+  accessToken: process.env.DROPBOX_ACCESS_TOKEN,
   fetch,
 });
 
