@@ -6,7 +6,6 @@ dotenv.config();
 
 const dbx = new Dropbox({
   customHeaders: {
-    "Content-Type": "application/json",
     Authorization: `Bearer ${process.env.DROPBOX_ACCESS_TOKEN}`,
   },
   fetch,
