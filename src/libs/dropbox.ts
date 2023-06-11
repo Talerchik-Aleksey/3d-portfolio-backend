@@ -4,15 +4,15 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const appKey = process.env.DROPBOX_APP_KEY;
+const appSecret = process.env.DROPBOX_APP_SECRET;
+
 const dbx = new Dropbox({
-  customHeaders: {
-    Authorization: `Bearer ${process.env.DROPBOX_ACCESS_TOKEN}`,
-  },
+  clientId: appKey,
+  clientSecret: appSecret,
   fetch,
 });
 
-// Now you can use dbx to interact with Dropbox...
-//
 export async function uploadFile(file: any, name: string) {
   const res = await dbx.filesUpload({
     path: `/3d-protfolio/${name}.glb`,
