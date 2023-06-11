@@ -9,6 +9,8 @@ import {
   getWorkFromDb,
   addViewsForWork,
 } from "../services/works";
+import { errorResponse } from "../utils/errorResponse";
+import { successResponse } from "../utils/successRespons";
 
 export async function postWork(req: Request, res: Response) {
   try {
@@ -68,10 +70,10 @@ export async function deleteWork(req: Request, res: Response) {
   try {
     const { id } = req.params;
     const work = await deleteWorkFromDb(+id);
-    res.status(200).send(work);
+    successResponse(req, res, work);
   } catch (error) {
     logger.error(error);
-    res.status(500).json({});
+    errorResponse(req, res, error);
   }
 }
 

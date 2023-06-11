@@ -5,7 +5,10 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const dbx = new Dropbox({
-  accessToken: process.env.DROPBOX_ACCESS_TOKEN,
+  customHeaders: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${process.env.DROPBOX_ACCESS_TOKEN}`,
+  },
   fetch,
 });
 
