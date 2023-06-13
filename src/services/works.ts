@@ -1,7 +1,5 @@
 import { getSequelize } from "../libs/sequelize";
-import { Objects } from "../models/Objects";
 import { Works } from "../models/Works";
-import fs from "fs/promises";
 
 import { logger } from "../libs/logger";
 import { downloadFile, uploadFile } from "../libs/dropbox";
@@ -42,10 +40,9 @@ export async function createWork(requestBody: RequestBody) {
     // Create Work and Object in parallel
     const workPromise = Works.create({ name, views, image, description }, { transaction });
     const work = await workPromise;
-    await fs.writeFile(`./assets/${work.id}.gltf`, JSON.stringify(object));
 
-    // const res = await uploadFile(object, work.id);
-    // logger.info(res);
+    const res = await uploadFile(object, work.id);
+    logger.info(res);
 
     transaction.commit();
     return work;
@@ -83,8 +80,8 @@ export async function deleteWorkFromDb(id: number) {
 
 export async function getObjectFromDb(id: number) {
   try {
-    const object = await fs.readFile(`./assets/${id}.gltf`);
-    return object;
+    const res: any = await downloadFile(id);
+    return res.result.fileBinary;
   } catch (error) {
     logger.error(error);
   }
