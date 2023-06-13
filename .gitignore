@@ -121,3 +121,5 @@ web_modules/
 /config/local.json
 /build
 *.orig
+
+pnpm-lock.yaml
