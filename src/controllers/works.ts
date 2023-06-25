@@ -8,6 +8,7 @@ import {
   getObjectFromDb,
   getWorkFromDb,
   addViewsForWork,
+  createComment,
 } from "../services/works";
 import { errorResponse } from "../utils/errorResponse";
 import { successResponse } from "../utils/successRespons";
@@ -82,6 +83,17 @@ export async function addViews(req: Request, res: Response) {
     const { id } = req.params;
     const work = await addViewsForWork(+id);
     res.status(200).send(work);
+  } catch (error) {
+    logger.error(error);
+    res.status(500).json({});
+  }
+}
+
+export async function postComments(req: Request, res: Response) {
+  try {
+    const { email, comment, workId } = req.body;
+    const response = await createComment(email, comment, workId);
+    res.status(200).send(response);
   } catch (error) {
     logger.error(error);
     res.status(500).json({});

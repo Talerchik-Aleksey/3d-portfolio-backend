@@ -7,11 +7,13 @@ import {
   getObject,
   getWork,
   addViews,
+  postComments,
 } from "../controllers/works";
 
 const worksRouter = Router();
 
 worksRouter.get("/", getWorks);
+worksRouter.post("/comments", postComments);
 worksRouter.get("/:id/object", getObject);
 worksRouter.get("/:id", getWork);
 worksRouter.post("/new", postWork);

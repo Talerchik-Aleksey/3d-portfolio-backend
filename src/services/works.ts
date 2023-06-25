@@ -3,6 +3,10 @@ import { Works } from "../models/Works";
 
 import { logger } from "../libs/logger";
 import { downloadFile, uploadFile } from "../libs/dropbox";
+import { getUser } from "./user";
+import { Comments } from "../models/Comments";
+import { HttpError } from "../utils/HttpError";
+import { Users } from "../models/Users";
 
 type RequestBody = {
   name: string;
@@ -64,7 +68,19 @@ export async function getWorksFromDb() {
 }
 
 export async function getWorkFromDb(id: number) {
-  const work = await Works.findOne({ where: { id } });
+  const work = await Works.findOne({
+    where: { id },
+    include: [
+      {
+        model: Comments,
+        include: [
+          {
+            model: Users,
+          },
+        ],
+      },
+    ],
+  });
   return work;
 }
 
@@ -94,4 +110,19 @@ export async function addViewsForWork(id: number) {
   }
   work.views += 1;
   await work.save();
+}
+
+export async function createComment(email: string, comment: string, workId: number) {
+  try {
+    const user = await getUser(email);
+    if (!user) {
+      throw new HttpError(404, "User not found");
+    }
+
+    const createdComment = await Comments.create({ userId: user.id, comment, workId });
+    return createdComment;
+  } catch (error) {
+    logger.error(error);
+    throw error;
+  }
 }

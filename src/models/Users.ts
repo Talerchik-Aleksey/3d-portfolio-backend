@@ -9,7 +9,9 @@ import {
   PrimaryKey,
   AllowNull,
   AutoIncrement,
+  HasMany,
 } from "sequelize-typescript";
+import { Comments } from "./Comments";
 
 @Table({
   tableName: "users",
@@ -42,4 +44,7 @@ export class Users extends Model {
   @DeletedAt
   @Column(DataType.DATE)
   deletedAt!: Date;
+
+  @HasMany(() => Comments)
+  comments!: Comments[];
 }
