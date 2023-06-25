@@ -73,12 +73,17 @@ export async function getWorkFromDb(id: number) {
     include: [
       {
         model: Comments,
+        order: [["createdAt", "DESC"]],
         include: [
           {
             model: Users,
           },
         ],
       },
+    ],
+    order: [
+      ["comments", "createdAt", "DESC"],
+      ["createdAt", "DESC"],
     ],
   });
   return work;
@@ -120,6 +125,7 @@ export async function createComment(email: string, comment: string, workId: numb
     }
 
     const createdComment = await Comments.create({ userId: user.id, comment, workId });
+    createdComment.dataValues.login = user.login;
     return createdComment;
   } catch (error) {
     logger.error(error);
