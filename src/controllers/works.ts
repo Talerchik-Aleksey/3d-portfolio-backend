@@ -36,8 +36,8 @@ export async function getWorks(req: Request, res: Response) {
 export async function getWork(req: Request, res: Response) {
   try {
     const { id } = req.params;
-    const work = await getWorkFromDb(+id);
-    res.status(200).send(work);
+    const { work, userLikesCount } = await getWorkFromDb(+id);
+    res.status(200).json({ work, userLikesCount });
   } catch (error) {
     logger.error(error);
     res.status(500).json({});

@@ -90,7 +90,11 @@ export async function getWorkFromDb(id: number) {
       ["createdAt", "DESC"],
     ],
   });
-  return work;
+
+  const userLikesCount = await UserLikes.count({
+    where: { workId: id },
+  });
+  return { work, userLikesCount };
 }
 
 export async function updateWork(id: number, requestBody: RequestBody) {
