@@ -9,42 +9,33 @@ import {
   PrimaryKey,
   AllowNull,
   AutoIncrement,
-  Default,
-  HasOne,
-  HasMany,
+  ForeignKey,
+  BelongsTo,
 } from "sequelize-typescript";
-import { Comments } from "./Comments";
-import { UserLikes } from "./UserLikes";
-import { Objects } from "./Objects";
+import { Users } from "./Users";
+import { Works } from "./Works";
 
 @Table({
-  tableName: "works",
+  tableName: "user_likes",
   timestamps: true,
   paranoid: true,
   underscored: true,
 })
-export class Works extends Model {
+export class UserLikes extends Model {
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
   id!: string;
 
   @AllowNull(false)
+  @ForeignKey(() => Users)
   @Column(DataType.STRING)
-  name!: string;
+  userId!: string;
 
   @AllowNull(false)
-  @Default(0)
+  @ForeignKey(() => Works)
   @Column(DataType.INTEGER)
-  views!: number;
-
-  @AllowNull(false)
-  @Column(DataType.STRING)
-  image!: string;
-
-  @AllowNull(false)
-  @Column(DataType.STRING)
-  description!: string;
+  workId!: string;
 
   @CreatedAt
   @Column(DataType.DATE)
@@ -58,12 +49,9 @@ export class Works extends Model {
   @Column(DataType.DATE)
   deletedAt!: Date;
 
-  @HasOne(() => Objects)
-  objects!: Objects;
+  @BelongsTo(() => Users)
+  user!: Users;
 
-  @HasMany(() => Comments)
-  comments!: Comments[];
-
-  @HasMany(() => UserLikes)
-  userLikes!: UserLikes[];
+  @BelongsTo(() => Works)
+  work!: Works;
 }

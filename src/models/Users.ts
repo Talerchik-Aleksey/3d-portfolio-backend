@@ -12,6 +12,7 @@ import {
   HasMany,
 } from "sequelize-typescript";
 import { Comments } from "./Comments";
+import { UserLikes } from "./UserLikes";
 
 @Table({
   tableName: "users",
@@ -47,4 +48,7 @@ export class Users extends Model {
 
   @HasMany(() => Comments)
   comments!: Comments[];
+
+  @HasMany(() => UserLikes)
+  userLikes!: UserLikes[];
 }

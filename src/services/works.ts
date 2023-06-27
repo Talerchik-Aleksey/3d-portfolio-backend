@@ -7,6 +7,7 @@ import { getUser } from "./user";
 import { Comments } from "../models/Comments";
 import { HttpError } from "../utils/HttpError";
 import { Users } from "../models/Users";
+import { UserLikes } from "../models/UserLikes";
 
 type RequestBody = {
   name: string;
@@ -63,7 +64,10 @@ export async function createWork(requestBody: RequestBody) {
 }
 
 export async function getWorksFromDb() {
-  const works = await Works.findAll({ order: [["createdAt", "DESC"]] });
+  const works = await Works.findAll({
+    include: [{ model: UserLikes, include: [{ model: Users }] }],
+    order: [["createdAt", "DESC"]],
+  });
   return works;
 }
 
